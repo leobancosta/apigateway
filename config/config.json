@@ -1,0 +1,29 @@
+{
+	"development": {
+		"config_id": "development",
+		"app_name": "my app",
+		"app_desc": "my app desc",
+		"node_port": 3000,
+		"json_indentation": 4,
+		"microservice_url": "http://dev-microservices",
+		"secret": "mysecret",
+		"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1NjY4MjM1NzEsImV4cCI6MTU5ODM1OTU3MSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.i5tTEf7OwwKXiHi2yIXj3QGgLDHdnyzyLG1B9G1VzdI"
+	},
+	"testing": {
+		"config_id": "testing",
+		"secret": "mysecret"
+	},
+	"staging": {
+		"config_id": "staging",
+		"node_port": 8080,
+		"microservice_url": "http://staging-microservices",
+		"secret": "mysecret"
+	},
+	"production": {
+		"config_id": "production",
+		"node_port": 8080,
+		"microservice_url": "http://prod-microservices",
+		"secret": "devsecops2019",
+		"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1NjY4MjM1NzEsImV4cCI6MTU5ODM1OTU3MSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.11yWwA4hVsd_zx5or-VEY3hLY7NheDuE_4QTOgxMQH8"
+	}
+}
