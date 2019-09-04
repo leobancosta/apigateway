@@ -1,7 +1,7 @@
 const express = require('express');
 // environment variables
 process.env.NODE_ENV = 'development';
-
+const login = require('./login');
 const app = express();
 const bodyParser = require('body-parser');
 const jwt = require("jsonwebtoken");
@@ -9,10 +9,12 @@ const config = require('./config/config.js');
 var cors = require('cors')
 app.use(cors());
 var client = require('node-rest-client').Client;
+const dashboard = require('./dashboard.js');
 
 const fs = require('fs');
 const path = require('path');
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(function (req, res, next) {
 	var bearerHeader = req.headers['authorization'];
 	var token;
@@ -45,21 +47,21 @@ app.get('/', (req, res) => {
 });
 
 //will create folder and file for logging of request in /employee/register
-fs.mkdir(path.join(__dirname, '/empRegister'), (err) => {
-	if (err) throw err;
-	console.log('folder created');
-});
+// fs.mkdir(path.join(__dirname, '/empRegister'), (err) => {
+// 	if (err) throw err;
+// 	console.log('folder created');
+// });
 
-fs.writeFile(path.join(__dirname, 'empRegister', 'logs.txt'), 'REQUEST LOGS++++', {}, err => {
-	if (err) throw err;
-	console.log('file created');
+// fs.writeFile(path.join(__dirname, 'empRegister', 'logs.txt'), 'REQUEST LOGS++++', {}, err => {
+// 	if (err) throw err;
+// 	console.log('file created');
 
-});
+// });
 app.post('/employee/register', (req, res, next) => {
 	console.log('First API ...')
 
 	// will append logs request
-	fs.appendFile(path.join(__dirname, '/empRegister', 'logs.txt'), '\n'+req.param.body, {}, err => {
+	fs.appendFile(path.join(__dirname, '/empRegister', 'logs.txt'), '\n' + req.param.body, {}, err => {
 		if (err) throw err;
 		console.log('file created');
 	});
@@ -117,7 +119,38 @@ app.post('/employee/authenticate', (req, res, next) => {
 	});
 });
 
+app.post('/employee/login', function (req, res) {
+	const employeeEmail = login.find(l => l.empEmail === req.body.empEmail);
+	if (!employeeEmail) {
+		res.status(200).send({
+			success: true,
+			message: 'Login successful'
+		});
+	}
+	else {
+		if (employeeEmail.empPassword === req.body.empPassword) {
+			res.status(200).send({
+				success: true,
+				message: 'Login successful'
+			});
+		}
+		else {
+			res.send({
+				success: false,
+				message: 'Wrong password'
+			});
 
+		}
+	}
+});
+
+app.get('/employee/dashboard', function (req, res) {
+	res.send({
+		success: true,
+		message: "found",
+		data: [dashboard]
+	});
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -132,4 +165,4 @@ app.use(function (err, req, res, next) {
 	res.send(err.name + ' - ' + err.message);
 });
 
-app.listen(global.gConfig.node_port, () => console.log('Listening on port  ${global.gConfig.node_port}'));
+app.listen(global.gConfig.node_port, () => console.log(`Listening on port  ${global.gConfig.node_port}`));
