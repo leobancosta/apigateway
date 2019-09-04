@@ -1,4 +1,5 @@
 FROM node:8.6-alpine
 RUN echo "building image"
-EXPOSE 3000
+RUN echo "starting npm
+PUBLISH 80
 CMD ["npm", "start"]

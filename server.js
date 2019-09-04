@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
 		var bearer = bearerHeader.split(" ");
 		token = bearer[1];
 		jwt.verify(token, global.gConfig.secret, function (err, decoded) {
-			console.log("22222");
+			console.log("3423545234");
 			if (err) {
 				console.log(err);
 				req.authenticated = false;
