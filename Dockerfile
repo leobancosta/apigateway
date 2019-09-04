@@ -6,7 +6,7 @@ WORKDIR /home/jenkins/apigateway
 COPY package.json /home/jenkins/apigateway/
 RUN npm install
  
-COPY . .
+COPY . /home/jenkins/apigateway/
  
 EXPOSE 3000
 CMD ["npm", "start"]
