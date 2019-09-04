@@ -5,13 +5,14 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
-	"start": "node server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Leo Bancosta",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
