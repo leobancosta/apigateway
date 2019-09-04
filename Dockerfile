@@ -1,9 +1,9 @@
 FROM node:8.6-alpine
  
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /home/jenkins/apigateway
+WORKDIR /home/jenkins/apigateway
  
-COPY package.json ./
+COPY package.json /home/jenkins/apigateway/
 RUN npm install
  
 COPY . .
