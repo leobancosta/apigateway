@@ -96,9 +96,9 @@ app.post('/employee/authenticate', (req, res, next) => {
 app.post('/employee/login', function (req, res) {
 	const employeeEmail = login.find(l => l.empEmail === req.body.empEmail);
 	if (!employeeEmail) {
-		res.status(200).send({
-			success: true,
-			message: 'Login successful'
+		res.status(401).send({
+			success: false,
+			message: 'Login failed'
 		});
 	}
 	else {
