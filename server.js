@@ -61,42 +61,16 @@ app.post('/employee/register', (req, res, next) => {
 	console.log('First API ...')
 
 	// will append logs request
-	fs.appendFile(path.join(__dirname, '/empRegister', 'logs.txt'), '\n' + req.param.body, {}, err => {
+	fs.appendFile('/empRegister/logs.txt', '\n' + req.body.empEmail, function(err){
 		if (err) throw err;
 		console.log('file created');
 	});
 
-	var args = {
-		path: { "empEmail": req.body.empEmail },
-		headers: { "Content-Type": "application/json" }
-	};
-
-	client.get("http://dso-services/employees?empEmail=${empEmail}", args, function (data, response) {
-		console.log(data);
-		console.log(response);
-		if (response.statusCode != 200) {
-			next(err)
-		}
-	});
-
 	let privateKey = fs.readFileSync('./config/jwt/private.pem', 'utf8');
 	let empPasswd = jwt.sign({ "body": req.body.empEmail }, privateKey, { algorithm: 'HS256' });
+	
+	console.log('register API password : ' + empPasswd);
 
-	var args1 = {
-		data: { empId: req.body.empId, empEmail: req.body.empEmail, empPassword: empPasswd, empFirstname: req.body.empFirstname, empLastname: req.body.empLastname, deptId: req.body.deptId, roleId: req.body.roleId },
-		headers: { "Content-Type": "application/json" }
-	};
-
-	client.post("http://dso-services/employees", args1, function (data, response) {
-		console.log(data);
-		console.log(response);
-
-		if (response.statusCode != 200) {
-			next(err);
-		} else {
-			res.send("Registration Successful!");
-		}
-	});
 });
 
 
