@@ -94,6 +94,7 @@ app.post('/employee/authenticate', (req, res, next) => {
 });
 
 app.post('/employee/login', function (req, res) {
+	console.log('Login API ... Authenticate user : ' + req.body.empEmail);
 	const employeeEmail = login.find(l => l.empEmail === req.body.empEmail);
 	if (!employeeEmail) {
 		res.status(401).send({
