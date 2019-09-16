@@ -8,7 +8,9 @@ const jwt = require("jsonwebtoken");
 const config = require('./config/config.js');
 var cors = require('cors')
 app.use(cors());
-var client = require('node-rest-client').Client;
+
+const request = require('request');
+
 const dashboard = require('./dashboard.js');
 
 const fs = require('fs');
@@ -77,20 +79,36 @@ app.post('/employee/register', (req, res, next) => {
 app.post('/employee/authenticate', (req, res, next) => {
 
 	var args2 = {
-		data: { empEmail: empEmail, empPassword: empPassword },
 		headers: { "Content-Type": "application/json" }
 	};
 
-	client.post("http://dso-services/employees", args2, function (data, response) {
-		console.log(data);
-		console.log(response);
-
-		if (response.statusCode != 200) {
-			next(err);
-		} else {
-			res.send("Authentication Successful!");
-		}
+	var pass = req.body.empPasswd;
+	var empEmail = false;
+	var empPassword = null;
+	var active = false;
+	request("http://40.65.191.57:8080/dsoservice/employees/"+req.body.empEmail, { json: true }, (err, res, body) =>  {
+		if (err) { return console.log(err); }
+		console.log(body.empEmail);
+		console.log(body.empPassword);
+		empEmail = body.empEmail;
+		empPassword = body.empPassword;
+		active = body.active;
 	});
+	var resp = null;
+	if(empPassword == pass){
+		resp = {
+			'authenticated' : true,
+			'message' : 'Auhentication successful!'
+		};
+	} else {
+		resp = {
+			'authenticated' : false,
+			'message' : 'Invalid Email/Password!'
+		};	
+	}
+
+	res.send(resp);
+	
 });
 
 app.post('/employee/login', function (req, res) {
