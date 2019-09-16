@@ -78,37 +78,35 @@ app.post('/employee/register', (req, res, next) => {
 
 app.post('/employee/authenticate', (req, res, next) => {
 
-	var args2 = {
-		headers: { "Content-Type": "application/json" }
-	};
-
 	var pass = req.body.empPassword;
 	console.log(pass);
-	var empEmail = false;
-	var empPassword = null;
-	var active = false;
-	request("http://40.65.191.57:8080/dsoservice/employees/"+req.body.empEmail, { json: true }, (err, res, body) =>  {
-		if (err) { return console.log(err); }
-		console.log(body.empEmail);
-		console.log(body.empPassword);
-		empEmail = body.empEmail;
-		empPassword = body.empPassword;
-		active = body.active;
+	var resp = {};
+	request("http://40.65.191.57:8080/dsoservice/employees/"+req.body.empEmail, { json: true }, (error, response, body) =>  {
+		if (error) { return console.log(error); }
+	}).on('data', function(data) {
+		var microResp = JSON.parse(data);
+		var empEmail = microResp.empEmail;
+		var empPassword = microResp.empPassword;
+		if(empPassword == pass){
+			resp = {
+				'authenticated' : true,
+				'message' : 'Auhentication successful!'
+			};
+		} else {
+			resp = {
+				'authenticated' : false,
+				'message' : 'Invalid Email/Password!'
+			};
+		}
+		console.log('decoded chunk: ' + data);
+		res.send(resp);
+	}).on('response', function(response) {
+		// unmodified http.IncomingMessage object
+		response.on('data', function(data) {
+		// compressed data as it is received
+		console.log('received ' + data.length + ' bytes of compressed data')
+		})
 	});
-	var resp = null;
-	if(empPassword == pass){
-		resp = {
-			'authenticated' : true,
-			'message' : 'Auhentication successful!'
-		};
-	} else {
-		resp = {
-			'authenticated' : false,
-			'message' : 'Invalid Email/Password!'
-		};	
-	}
-
-	res.send(resp);
 	
 });
 
