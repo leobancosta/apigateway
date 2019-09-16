@@ -1,5 +1,14 @@
 FROM node:8.6-alpine
 RUN echo "building image"
+
+WORKDIR /usr/src/app
+COPY package.json .
+
+RUN echo "installing packages image"
+RUN npm install
+
+COPY . .
+EXPOSE 8080
+
 RUN echo "starting npm"
-EXPOSE 80
 CMD ["npm", "start"]
