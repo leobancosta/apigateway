@@ -16,7 +16,7 @@ const dashboard = require('./dashboard.js');
 const fs = require('fs');
 const path = require('path');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
 	var bearerHeader = req.headers['authorization'];
 	var token;
