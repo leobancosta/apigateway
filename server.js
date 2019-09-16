@@ -82,7 +82,7 @@ app.post('/employee/authenticate', (req, res, next) => {
 		headers: { "Content-Type": "application/json" }
 	};
 
-	var pass = req.body.empPasswd;
+	var pass = req.body.empPassword;
 	var empEmail = false;
 	var empPassword = null;
 	var active = false;
