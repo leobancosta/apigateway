@@ -7,7 +7,7 @@ COPY package.json .
 RUN echo "installing packages image"
 RUN npm install
 
-RUN chmod 777 ./node_modules/.bin/mocha
+RUN chmod 777 node_modules/.bin/mocha
 RUN npm uninstall mocha && npm i mocha
 
 COPY . .
