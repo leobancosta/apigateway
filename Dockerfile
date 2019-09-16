@@ -1,4 +1,4 @@
-FROM node:8.6-alpine
+FROM node:lts
 RUN echo "building image!!!!"
 
 WORKDIR /usr/src/app
