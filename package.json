@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "JUNIT_REPORT_PATH=/report.xml mocha --colors --reporter mocha-jenkins-reporter",
     "start": "node server.js"
   },
   "keywords": [],
@@ -19,10 +19,12 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "mocha": "^6.2.0",
+    "ansi-colors": "^4.1.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.2.1",
+    "mocha": "^6.2.0",
+    "mocha-jenkins-reporter": "^0.4.2",
     "should": "^13.2.3",
     "supertest": "^4.0.2"
   }
