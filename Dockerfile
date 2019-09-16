@@ -6,6 +6,7 @@ COPY package.json .
 
 RUN echo "installing packages image"
 RUN npm install
+npm install -g mocha
 
 COPY . .
 EXPOSE 8080
