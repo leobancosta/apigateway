@@ -1,5 +1,5 @@
 FROM node:8.6-alpine
-RUN echo "building image  !!!!"
+RUN echo "building image   !!!!"
 
 WORKDIR /usr/src/app
 COPY package.json .
