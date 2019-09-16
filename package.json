@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "JUNIT_REPORT_PATH=/report.xml mocha --colors --reporter mocha-jenkins-reporter",
+    "test": "mocha --recursive -R xunit test/ > test-reports.xml",
     "start": "node server.js"
   },
   "keywords": [],
