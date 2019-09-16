@@ -92,14 +92,19 @@ app.post('/employee/authenticate', (req, res, next) => {
 				'authenticated' : true,
 				'message' : 'Auhentication successful!'
 			};
+			console.log('decoded chunk: ' + data);
+			res.status(200);
+			res.send(resp);
 		} else {
 			resp = {
 				'authenticated' : false,
 				'message' : 'Invalid Email/Password!'
 			};
+			console.log('error decoded chunk: ' + data);
+			res.status(400);
+			res.send(resp);
 		}
-		console.log('decoded chunk: ' + data);
-		res.send(resp);
+
 	}).on('response', function(response) {
 		// unmodified http.IncomingMessage object
 		response.on('data', function(data) {
@@ -157,4 +162,6 @@ app.use(function (err, req, res, next) {
 	res.send(err.name + ' - ' + err.message);
 });
 
-app.listen(global.gConfig.node_port, () => console.log(`Listening on port  ${global.gConfig.node_port}`));
+var server = app.listen(global.gConfig.node_port, () => console.log(`Listening on port  ${global.gConfig.node_port}`));
+
+module.exports = server;
