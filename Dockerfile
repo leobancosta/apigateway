@@ -1,5 +1,5 @@
 FROM node:lts
-RUN echo "building image!     !!!"
+RUN echo "building image!  !!!"
 
 WORKDIR /usr/src/app
 COPY package.json .
