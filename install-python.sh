@@ -1,5 +1,6 @@
 #!/bin/bash
 
+su jenkins
 apt-get update
 out_put=$?
 
