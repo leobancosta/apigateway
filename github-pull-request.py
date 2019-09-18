@@ -10,4 +10,6 @@ dataParam = {"title": "CI Pull Request","body": "Jenkins Pull Request","head": "
 response = requests.post(githubURL, json=dataParam, headers=headParam)
 
 respData = json.dumps(response.json(), indent=4)
-response = {"pull_number":respData['number'], "head_sha": respData['head']['sha']}
+print respData
+os.environ['pull_number'] = respData['number']
+os.environ['head_sha'] = respData['head']['sha']}
