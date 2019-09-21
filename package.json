@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "./node_modules/.bin/mocha --recursive -R xunit test/ > test-reports.xml",
     "start": "node server.js"
   },
   "keywords": [],
@@ -16,11 +16,16 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
-    "node-rest-client": "^3.1.0"
+    "request": "^2.88.0"
   },
   "devDependencies": {
+    "ansi-colors": "^4.1.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.2.1",
     "mocha": "^6.2.0",
+    "mocha-jenkins-reporter": "^0.4.2",
+    "mocha-xunit-reporter": "^1.1.0",
     "should": "^13.2.3",
     "supertest": "^4.0.2"
   }
