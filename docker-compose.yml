@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+
+    run.apigateway:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        image: dso/apigateway:1.0
+        container_name: apigateway
+        ports:
+            - "8080:8080"
+        command: npm start
+
+    test.apigateway:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        image: dso/test-apigateway
+        container_name: test-apigateway
+        command: npm test

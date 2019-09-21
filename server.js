@@ -8,13 +8,15 @@ const jwt = require("jsonwebtoken");
 const config = require('./config/config.js');
 var cors = require('cors')
 app.use(cors());
-var client = require('node-rest-client').Client;
+
+const request = require('request');
+
 const dashboard = require('./dashboard.js');
 
 const fs = require('fs');
 const path = require('path');
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
 	var bearerHeader = req.headers['authorization'];
 	var token;
@@ -76,21 +78,41 @@ app.post('/employee/register', (req, res, next) => {
 
 app.post('/employee/authenticate', (req, res, next) => {
 
-	var args2 = {
-		data: { empEmail: empEmail, empPassword: empPassword },
-		headers: { "Content-Type": "application/json" }
-	};
-
-	client.post("http://dso-services/employees", args2, function (data, response) {
-		console.log(data);
-		console.log(response);
-
-		if (response.statusCode != 200) {
-			next(err);
+	var pass = req.body.empPassword;
+	console.log(pass);
+	var resp = {};
+	request("http://40.65.191.57:8080/dsoservice/employees/"+req.body.empEmail, { json: true }, (error, response, body) =>  {
+		if (error) { return console.log(error); }
+	}).on('data', function(data) {
+		var microResp = JSON.parse(data);
+		var empEmail = microResp.empEmail;
+		var empPassword = microResp.empPassword;
+		if(empPassword == pass){
+			resp = {
+				'authenticated' : true,
+				'message' : 'Auhentication successful!'
+			};
+			console.log('decoded chunk: ' + data);
+			res.status(200);
+			res.send(resp);
 		} else {
-			res.send("Authentication Successful!");
+			resp = {
+				'authenticated' : false,
+				'message' : 'Invalid Email/Password!'
+			};
+			console.log('error decoded chunk: ' + data);
+			res.status(400);
+			res.send(resp);
 		}
+
+	}).on('response', function(response) {
+		// unmodified http.IncomingMessage object
+		response.on('data', function(data) {
+		// compressed data as it is received
+		console.log('received ' + data.length + ' bytes of compressed data')
+		})
 	});
+	
 });
 
 app.post('/employee/login', function (req, res) {
@@ -140,4 +162,6 @@ app.use(function (err, req, res, next) {
 	res.send(err.name + ' - ' + err.message);
 });
 
-app.listen(global.gConfig.node_port, () => console.log(`Listening on port  ${global.gConfig.node_port}`));
+var server = app.listen(global.gConfig.node_port, () => console.log(`Listening on port  ${global.gConfig.node_port}`));
+
+module.exports = server;
