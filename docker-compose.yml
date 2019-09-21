@@ -15,6 +15,6 @@ services:
         build:
             context: .
             dockerfile: ./Dockerfile
-        image: dso/test-apigateway
+        image: dso/test-apigateway:1.0
         container_name: test-apigateway
         command: npm test
